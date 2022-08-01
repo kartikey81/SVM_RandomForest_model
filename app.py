@@ -11,7 +11,7 @@ model = pickle.load(open('svmmodel.pkl', 'rb'))
 model_randomforest = pickle.load(open('randomforest.pkl', 'rb')) 
 
 def predict_note_authentication(UserID, Gender,Age,EstimatedSalary):
-  output= model.predict(sc.transform([[Age,EstimatedSalary]]))
+  output= model.predict([[Age,EstimatedSalary]])
   print("Purchased", output)
   if output==[1]:
     prediction="Item will be purchased"
