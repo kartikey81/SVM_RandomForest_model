@@ -20,7 +20,7 @@ def predict_note_authentication(UserID, Gender,Age,EstimatedSalary):
   print(prediction)
   return prediction
 def predict_random(UserID, Gender,Age,EstimatedSalary):
-  output= model_randomforest.predict(sc.transform([[Age,EstimatedSalary]]))
+  output= model_randomforest.predict([[Age,EstimatedSalary]])
   print("Purchased", output)
   if output==[1]:
     prediction="Item will be purchased"
