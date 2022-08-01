@@ -1,4 +1,3 @@
-
 import streamlit as st 
 from PIL import Image
 import pickle
@@ -9,9 +8,13 @@ st.set_option('deprecation.showfileUploaderEncoding', False)
 # Load the pickled model
 model = pickle.load(open('svmmodel.pkl', 'rb')) 
 model_randomforest = pickle.load(open('randomforest.pkl', 'rb')) 
-
+dataset= pd.read_csv('Social_Network_Ads.csv')
+X = dataset.iloc[:, [2, 3]].values
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X = sc.fit_transform(X)
 def predict_note_authentication(UserID, Gender,Age,EstimatedSalary):
-  output= model.predict([[Age,EstimatedSalary]])
+  output= model.predict(sc.transform([[Age,EstimatedSalary]]))
   print("Purchased", output)
   if output==[1]:
     prediction="Item will be purchased"
@@ -20,7 +23,7 @@ def predict_note_authentication(UserID, Gender,Age,EstimatedSalary):
   print(prediction)
   return prediction
 def predict_random(UserID, Gender,Age,EstimatedSalary):
-  output= model_randomforest.predict([[Age,EstimatedSalary]])
+  output= model_randomforest.predict(sc.transform([[Age,EstimatedSalary]]))
   print("Purchased", output)
   if output==[1]:
     prediction="Item will be purchased"
@@ -60,13 +63,13 @@ def main():
       result=predict_random(UserID, Gender,Age,EstimatedSalary)
       st.success('Random forest Model  has predicted {}'.format(result))  
     if st.button("About"):
-      st.header("Developed by Kartikey Sharma")
-      st.subheader("Head , Department of Computer Engineering")
+      st.header("Developed by Student")
+      st.subheader("Student , Department of Computer Engineering")
     html_temp = """
     <div class="" style="background-color:orange;" >
     <div class="clearfix">           
     <div class="col-md-12">
-    <center><p style="font-size:20px;color:white;margin-top:10px;">Machine Learning Experiment : Support Vector Machine and Random Forest</p></center> 
+    <center><p style="font-size:20px;color:white;margin-top:10px;">Machine Learning Experiment 5: Support Vector Machine and Random Forest</p></center> 
     </div>
     </div>
     </div>
